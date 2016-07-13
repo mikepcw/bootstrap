@@ -20,6 +20,7 @@ cat <<EOF > $f
   tasks:
     - name: cuda | repo
       apt: deb=http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1404/x86_64/cuda-repo-ubuntu1404_7.5-18_amd64.deb
+      when: (ansible_distribution == 'Ubuntu' and ansible_distribution_version == '14.04')
     - name: cuda | install prereqs
       apt: name={{ item }} state=latest update_cache=yes cache_valid_time=600
       with_items:
@@ -29,6 +30,7 @@ cat <<EOF > $f
         - dkms
     - name: cuda | install cuda driver and toolkit
       apt: name={{ item }} state=latest update_cache=yes
+      when: (ansible_distribution == 'Ubuntu' and ansible_distribution_version == '14.04')
       with_items:
         - cuda
 EOF
