@@ -18,6 +18,8 @@ cat <<EOF > $f
     - role: 'ryanolson.nvidia-docker'
       sudo: true
   tasks:
+    - name: docker | add user to docker group
+      user: name=$SUDO_USER groups=docker append=yes
     - name: cuda | repo
       apt: deb=http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1404/x86_64/cuda-repo-ubuntu1404_7.5-18_amd64.deb
       when: (ansible_distribution == 'Ubuntu' and ansible_distribution_version == '14.04')
