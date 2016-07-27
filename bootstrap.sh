@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+# Ensure running as regular user
+if [ $(id -u) -eq 0 ] ; then
+	echo "Please run as a regular user"
+	exit 1
+fi
+
 # Install newer version of Ansible
 sudo apt-get -y install software-properties-common
 sudo apt-add-repository -y ppa:ansible/ansible
@@ -7,7 +13,7 @@ sudo apt-get update
 sudo apt-get -y install ansible
 
 # Add nvidia-docker role from Ansible Galaxy
-sudo ansible-galaxy install ryanolson.nvidia-docker
+ansible-galaxy install ryanolson.nvidia-docker
 
 # Write playbook
 f=$(mktemp)
@@ -19,7 +25,7 @@ cat <<EOF > $f
       sudo: true
   tasks:
     - name: docker | add user to docker group
-      user: name=$SUDO_USER groups=docker append=yes
+      user: name=$USER groups=docker append=yes
     - name: cuda | repo
       apt: deb=http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1404/x86_64/cuda-repo-ubuntu1404_7.5-18_amd64.deb
       when: (ansible_distribution == 'Ubuntu' and ansible_distribution_version == '14.04')
