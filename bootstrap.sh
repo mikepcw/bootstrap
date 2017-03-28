@@ -46,7 +46,7 @@ cat <<EOF > $f
       apt: name={{ item }} state=latest update_cache=yes
       when: (ansible_distribution == 'Ubuntu')
       with_items:
-        - cuda
+        - cuda-drivers
 EOF
 
 # Execute playbook
