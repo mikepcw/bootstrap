@@ -47,6 +47,8 @@ cat <<EOF > $f
       when: (ansible_distribution == 'Ubuntu')
       with_items:
         - cuda
+    - name: nvidia-docker | service
+      service: name=nvidia-docker state=restarted enabled=yes
 EOF
 
 # Execute playbook
