@@ -26,9 +26,6 @@ cat <<EOF > $f
   tasks:
     - name: docker | add user to docker group
       user: name=$USER groups=docker append=yes
-    - name: docker | modify default subnet
-      lineinfile: dest=/etc/default/docker regexp="^DOCKER_OPTS" insertafter="^#DOCKER_OPTS" \
-          line='DOCKER_OPTS="--dns 8.8.8.8 --dns 8.8.4.4 --bip=192.168.99.1/24 --fixed-cidr=192.168.99.0/24"'
     - name: cuda | repo
       apt: deb=http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1404/x86_64/cuda-repo-ubuntu1404_7.5-18_amd64.deb
       when: (ansible_distribution == 'Ubuntu' and ansible_distribution_version == '14.04')
@@ -46,7 +43,7 @@ cat <<EOF > $f
       apt: name={{ item }} state=latest update_cache=yes
       when: (ansible_distribution == 'Ubuntu')
       with_items:
-        - cuda
+        - cuda-drivers
     - name: nvidia-docker | service
       service: name=nvidia-docker state=restarted enabled=yes
 EOF

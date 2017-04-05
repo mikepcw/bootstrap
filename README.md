@@ -1,8 +1,13 @@
 # Bootstrap
 
-Bootstrap Linux machines with NVIDIA CUDA driver and toolkit, Docker and nvidia-docker
+Bootstrap Linux machines with NVIDIA CUDA driver, Docker and nvidia-docker
 
-Currently supports Ubuntu 14.04 only, Ubuntu 16.04 support will come with CUDA 8.0
+Currently supports Ubuntu 14.04 and 16.04 only
 
 ### Running
+
+`curl https://raw.githubusercontent.com/dholt/bootstrap/master/bootstrap.sh | bash -`
+
+or clone git repo and run:
+
 `bash ./bootstrap.sh`
