@@ -27,10 +27,10 @@ cat <<EOF > $f
     - name: docker | add user to docker group
       user: name=$USER groups=docker append=yes
     - name: cuda | repo
-      apt: deb=http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1404/x86_64/cuda-repo-ubuntu1404_7.5-18_amd64.deb
+      apt: deb=http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1404/x86_64/cuda-repo-ubuntu1404_8.0.61-1_amd64.deb
       when: (ansible_distribution == 'Ubuntu' and ansible_distribution_version == '14.04')
     - name: cuda | repo
-      apt: deb=http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/cuda-repo-ubuntu1604_8.0.44-1_amd64.deb
+      apt: deb=http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/cuda-repo-ubuntu1604_8.0.61-1_amd64.deb
       when: (ansible_distribution == 'Ubuntu' and ansible_distribution_version == '16.04')
     - name: cuda | install prereqs
       apt: name={{ item }} state=latest update_cache=yes cache_valid_time=600
