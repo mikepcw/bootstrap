@@ -39,7 +39,7 @@ cat <<EOF > $f
         - linux-source
         - linux-generic
         - dkms
-    - name: cuda | install cuda driver and toolkit
+    - name: cuda | install cuda driver
       apt: name={{ item }} state=latest update_cache=yes
       when: (ansible_distribution == 'Ubuntu')
       with_items:
