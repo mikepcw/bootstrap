@@ -15,6 +15,9 @@ sudo apt-get -y install ansible
 # Add nvidia-docker role from Ansible Galaxy
 ansible-galaxy install ryanolson.nvidia-docker --roles-path=/tmp/roles
 
+# Temporary workaround for docker role
+sed -i 's/docker-engine/docker-ce/g' /tmp/roles/ryanolson.docker/tasks/main.yml
+
 # Write playbook
 f=$(mktemp)
 cat <<EOF > $f
