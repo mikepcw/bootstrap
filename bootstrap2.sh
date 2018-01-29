@@ -42,8 +42,8 @@ cat <<EOF > $f
         url: https://nvidia.github.io/nvidia-docker/gpgkey
         state: present
     - name: nvidia-docker | apt repo
-      apt_repo:
-        repo: {{ item }}
+      apt_repository:
+        repo: "{{ item }}"
         state: present
         filename: 'nvidia-docker'
         update_cache: yes
@@ -56,7 +56,7 @@ cat <<EOF > $f
         name: nvidia-docker2
         state: latest
     - name: docker | restart service
-      service: name=nvidia-docker state=restarted enabled=yes
+      service: name=docker state=restarted enabled=yes
     - name: nvidia-docker | service
       service: name=nvidia-docker state=restarted enabled=yes
 EOF
