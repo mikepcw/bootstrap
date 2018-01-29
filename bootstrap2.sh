@@ -19,6 +19,10 @@ cat <<EOF > $f
   become: true
   become_method: sudo
   tasks:
+    - name: cuda | apt key
+      apt_key:
+        url: http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/7fa2af80.pub
+        state: present
     - name: cuda | repo
       apt: deb=http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1404/x86_64/cuda-repo-ubuntu1404_8.0.61-1_amd64.deb
       when: (ansible_distribution == 'Ubuntu' and ansible_distribution_version == '14.04')
