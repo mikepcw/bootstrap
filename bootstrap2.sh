@@ -61,8 +61,6 @@ cat <<EOF > $f
         state: latest
     - name: docker | restart service
       service: name=docker state=restarted enabled=yes
-    - name: nvidia-docker | service
-      service: name=nvidia-docker state=restarted enabled=yes
 EOF
 
 # Execute playbook
