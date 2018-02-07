@@ -28,6 +28,7 @@ cat <<EOF > $f
   become: true
   become_method: sudo
   vars:
+    docker_pkg_name: "docker-ce=17.12*"
     daemon_json:
       default-runtime: "nvidia"
       runtimes:
