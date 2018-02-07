@@ -1,8 +1,8 @@
 # Bootstrap
 
-Bootstrap Linux machines with NVIDIA CUDA driver, Docker and nvidia-docker
+Bootstrap Linux machines with NVIDIA CUDA driver, Docker and nvidia-docker2
 
-Currently supports Ubuntu 14.04 and 16.04 only
+Currently supports Ubuntu 16.04 only
 
 ### Running
 
