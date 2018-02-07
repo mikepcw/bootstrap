@@ -13,11 +13,11 @@ sudo apt-get update
 sudo apt-get -y install ansible
 
 # Install Docker if needed
+# Add docker role from Ansible Galaxy
+ansible-galaxy install angstwad.docker_ubuntu --roles-path=/tmp/roles
 tags="--skip-tags docker"
 type docker >/dev/null 2>&1
 if [ $? -eq 1 ] ; then
-	# Add docker role from Ansible Galaxy
-	ansible-galaxy install angstwad.docker_ubuntu --roles-path=/tmp/roles
 	tags=
 fi
 
