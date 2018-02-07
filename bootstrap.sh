@@ -86,7 +86,7 @@ cat <<EOF > $f
 EOF
 
 # Execute playbook
-ansible-playbook -i "localhost," -c local "${tags}" $f
+ansible-playbook -i "localhost," -c local ${tags} $f
 
 # cleanup
 rm -f $f
