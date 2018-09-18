@@ -28,7 +28,7 @@ cat <<EOF > $f
   become: true
   become_method: sudo
   vars:
-    docker_pkg_name: "docker-ce=17.12*"
+    docker_pkg_name: "docker-ce=18.06*"
     daemon_json:
       default-runtime: "nvidia"
       runtimes:
@@ -45,7 +45,7 @@ cat <<EOF > $f
         url: http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/7fa2af80.pub
         state: present
     - name: cuda | repo
-      apt: deb=http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/cuda-repo-ubuntu1604_9.1.85-1_amd64.deb
+      apt: deb=http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/cuda-repo-ubuntu1604_9.2.148-1_amd64.deb
     - name: cuda | install prereqs
       apt: name={{ item }} state=latest update_cache=yes cache_valid_time=600
       with_items:
