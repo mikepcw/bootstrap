@@ -42,10 +42,10 @@ cat <<EOF > $f
       user: name=$USER groups=docker append=yes
     - name: cuda | apt key
       apt_key:
-        url: http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/7fa2af80.pub
+        url: https://nvidia.github.io/nvidia-docker/gpgkey
         state: present
     - name: cuda | repo
-      apt: deb=http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/cuda-repo-ubuntu1604_9.2.148-1_amd64.deb
+      apt: deb=http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/cuda-repo-ubuntu1604_10.0.130-1_amd64.deb
     - name: cuda | install prereqs
       apt: name={{ item }} state=latest update_cache=yes cache_valid_time=600
       with_items:
