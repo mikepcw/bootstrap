@@ -8,7 +8,9 @@ Sets default runtime for nvidia-docker2 to `nvidia`, so `docker run --runtime=nv
 
 ### Running
 
-`curl https://raw.githubusercontent.com/mikepcw/bootstrap/master/bootstrap.sh | bash -`
+```
+curl https://raw.githubusercontent.com/mikepcw/bootstrap/master/bootstrap.sh | bash -
+```
 
 or clone git repo and run:
 
