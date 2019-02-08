@@ -12,6 +12,8 @@ Sets default runtime for nvidia-docker2 to `nvidia`, so `docker run --runtime=nv
 
 or clone git repo and run:
 
-`git clone https://github.com/mikepcw/bootstrap`
-`cd bootstrap/`
-`bash ./bootstrap.sh`
+```
+git clone https://github.com/mikepcw/bootstrap
+cd bootstrap/
+bash ./bootstrap.sh
+```
