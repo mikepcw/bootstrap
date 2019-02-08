@@ -22,13 +22,17 @@ if [ $? -eq 1 ] ; then
 fi
 
 # Write playbook
+UBUNTU_REL=$(lsb_release -sr)
+UBUNTU_REL_NODOT=${UBUNTU_REL//./}
+DOCKER_VERSION="5:18.09*"
+CUDA_VERSION="10.0.130-1"
 f=$(mktemp)
 cat <<EOF > $f
 - hosts: all
   become: true
   become_method: sudo
   vars:
-    docker_pkg_name: "docker-ce=18.06*"
+    docker_pkg_name: "docker-ce=${DOCKER_VERSION}"
     daemon_json:
       default-runtime: "nvidia"
       runtimes:
@@ -42,21 +46,27 @@ cat <<EOF > $f
       user: name=$USER groups=docker append=yes
     - name: cuda | apt key
       apt_key:
-        url: https://nvidia.github.io/nvidia-docker/gpgkey
+        url: http://developer.download.nvidia.com/compute/cuda/repos/ubuntu${UBUNTU_REL_NODOT}/x86_64/7fa2af80.pub
         state: present
     - name: cuda | repo
-      apt: deb=http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/cuda-repo-ubuntu1604_10.0.130-1_amd64.deb
+      apt: deb=http://developer.download.nvidia.com/compute/cuda/repos/ubuntu${UBUNTU_REL_NODOT}/x86_64/cuda-repo-ubuntu${UBUNTU_REL_NODOT}_${CUDA_VERSION}_amd64.deb
     - name: cuda | install prereqs
-      apt: name={{ item }} state=latest update_cache=yes cache_valid_time=600
-      with_items:
-        - build-essential
-        - linux-source
-        - linux-generic
-        - dkms
-    - name: cuda | install cuda driver
-      apt: name={{ item }} state=latest update_cache=yes
-      with_items:
-        - cuda-drivers
+      apt:
+        name: "{{ packages }}"
+        state: latest 
+        update_cache: yes 
+        cache_valid_time: 600
+      vars:
+        packages:
+          - build-essential
+          - linux-source
+          - linux-generic
+          - dkms
+    - name: cuda | install cuda drive
+      apt: 
+        name: "cuda-drivers"
+        state: latest 
+        update_cache: yes
     - name: nvidia-docker | apt key
       apt_key:
         url: https://nvidia.github.io/nvidia-docker/gpgkey
@@ -68,9 +78,9 @@ cat <<EOF > $f
         filename: 'nvidia-docker'
         update_cache: yes
       with_items:
-        - "deb https://nvidia.github.io/libnvidia-container/ubuntu16.04/amd64 /"
-        - "deb https://nvidia.github.io/nvidia-container-runtime/ubuntu16.04/amd64 /"
-        - "deb https://nvidia.github.io/nvidia-docker/ubuntu16.04/amd64 /"
+        - "deb https://nvidia.github.io/libnvidia-container/ubuntu${UBUNTU_REL}/amd64 /"
+        - "deb https://nvidia.github.io/nvidia-container-runtime/ubuntu${UBUNTU_REL}/amd64 /"
+        - "deb https://nvidia.github.io/nvidia-docker/ubuntu${UBUNTU_REL}/amd64 /"
     - name: nvidia-docker | install
       apt:
         name: nvidia-docker2
