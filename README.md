@@ -1,6 +1,7 @@
 # Bootstrap
 
-Bootstrap Linux machines with NVIDIA CUDA driver, docker and nvidia-docker2
+Bootstrap Linux machines with NVIDIA CUDA driver, docker and nvidia-docker2.
+
 Currently supports Ubuntu 16.04 and 18.04.
 
 Adds the current user to the `docker` group, so `sudo docker` is not required (must log out and back in to take effect).
