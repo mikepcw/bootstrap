@@ -24,7 +24,7 @@ fi
 # Write playbook
 UBUNTU_REL=$(lsb_release -sr)
 UBUNTU_REL_NODOT=${UBUNTU_REL//./}
-DOCKER_VERSION="5:18.09*"
+DOCKER_VERSION="5:18.09.1*"
 CUDA_VERSION="10.0.130-1"
 f=$(mktemp)
 cat <<EOF > $f
@@ -62,7 +62,7 @@ cat <<EOF > $f
           - linux-source
           - linux-generic
           - dkms
-    - name: cuda | install cuda drive
+    - name: cuda | install cuda driver
       apt: 
         name: "cuda-drivers"
         state: latest 
