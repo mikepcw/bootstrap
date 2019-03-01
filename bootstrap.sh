@@ -14,7 +14,7 @@ sudo apt-get -y install ansible
 
 # Install Docker if needed
 # Add docker role from Ansible Galaxy
-ansible-galaxy install angstwad.docker_ubuntu --roles-path=/tmp/roles
+ansible-galaxy install nickjj.docker --roles-path=/tmp/roles
 tags="--skip-tags docker"
 type docker >/dev/null 2>&1
 if [ $? -eq 1 ] ; then
@@ -24,15 +24,15 @@ fi
 # Write playbook
 UBUNTU_REL=$(lsb_release -sr)
 UBUNTU_REL_NODOT=${UBUNTU_REL//./}
-DOCKER_VERSION="5:18.09.1*"
-CUDA_VERSION="10.0.130-1"
+DOCKER_VERSION="5:18.09.2"
+CUDA_VERSION="10.1.105-1"
 f=$(mktemp)
 cat <<EOF > $f
 - hosts: all
   become: true
   become_method: sudo
   vars:
-    docker_pkg_name: "docker-ce=${DOCKER_VERSION}"
+    docker__version: ${DOCKER_VERSION}
     daemon_json:
       default-runtime: "nvidia"
       runtimes:
@@ -40,10 +40,8 @@ cat <<EOF > $f
           path: "/usr/bin/nvidia-container-runtime"
           runtimeArgs: []
   roles:
-    - { role: angstwad.docker_ubuntu, tags: docker }
+    - { role: nickjj.docker, tags: docker }
   tasks:
-    - name: docker | add user to docker group
-      user: name=$USER groups=docker append=yes
     - name: cuda | apt key
       apt_key:
         url: http://developer.download.nvidia.com/compute/cuda/repos/ubuntu${UBUNTU_REL_NODOT}/x86_64/7fa2af80.pub
@@ -53,7 +51,7 @@ cat <<EOF > $f
     - name: cuda | install prereqs
       apt:
         name: "{{ packages }}"
-        state: latest 
+        state: present
         update_cache: yes 
         cache_valid_time: 600
       vars:
