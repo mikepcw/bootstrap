@@ -24,8 +24,10 @@ fi
 # Write playbook
 UBUNTU_REL=$(lsb_release -sr)
 UBUNTU_REL_NODOT=${UBUNTU_REL//./}
-DOCKER_VERSION="5:18.09.2"
+DOCKER_VERSION="18.09.3"
+DOCKER_VERSION_FULL="5:${DOCKER_VERSION}"
 CUDA_VERSION="10.1.105-1"
+NVIDIA_DOCKER_VERSION="2.*+docker${DOCKER_VERSION}-1"
 f=$(mktemp)
 cat <<EOF > $f
 - hosts: all
@@ -63,7 +65,7 @@ cat <<EOF > $f
     - name: cuda | install cuda driver
       apt: 
         name: "cuda-drivers"
-        state: latest 
+        state: present
         update_cache: yes
     - name: nvidia-docker | apt key
       apt_key:
@@ -81,8 +83,8 @@ cat <<EOF > $f
         - "deb https://nvidia.github.io/nvidia-docker/ubuntu${UBUNTU_REL}/amd64 /"
     - name: nvidia-docker | install
       apt:
-        name: nvidia-docker2
-        state: latest
+        name: nvidia-docker2=${NVIDIA_DOCKER_VERSION}
+        state: present
     - name: set docker default runtime
       copy:
         content: "{{ daemon_json | to_nice_json }}"
