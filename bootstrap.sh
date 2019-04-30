@@ -24,9 +24,9 @@ fi
 # Write playbook
 UBUNTU_REL=$(lsb_release -sr)
 UBUNTU_REL_NODOT=${UBUNTU_REL//./}
-DOCKER_VERSION="18.09.3"
+DOCKER_VERSION="18.09.5"
 CUDA_VERSION="10.1.105-1"
-NVIDIA_DOCKER_VERSION="2.*+docker${DOCKER_VERSION}-1"
+NVIDIA_DOCKER_VERSION="2.*+docker${DOCKER_VERSION}-3"
 f=$(mktemp)
 cat <<EOF > $f
 - hosts: all
@@ -34,6 +34,7 @@ cat <<EOF > $f
   become_method: sudo
   vars:
     docker__version: "5:${DOCKER_VERSION}"
+    docker__state: "present"
     daemon_json:
       default-runtime: "nvidia"
       runtimes:
