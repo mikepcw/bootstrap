@@ -24,7 +24,7 @@ cat <<EOF > $f
   tasks:
     - name: nx | download installer
       get_url:
-        url: https://download.nomachine.com/download/6.5/Linux/nomachine_6.5.6_9_amd64.deb
+        url: https://download.nomachine.com/download/6.6/Linux/nomachine_6.6.8_5_amd64.deb
         dest: /tmp/nomachine.deb
     - name: nx | install nomachine
       apt:
