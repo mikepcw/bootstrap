@@ -22,9 +22,18 @@ cat <<EOF > $f
   vars:
     username: "{{ ansible_env.SUDO_USER }}"
   tasks:
+    - name: nx | get download page
+      get_url:
+        url: https://www.nomachine.com/download/download&id=6
+        dest: /tmp/nomachine.html
+    - name: nx | extract nomachine url
+      shell: "grep -o https://download.nomachine.com/download/.*/Linux/nomachine.*.deb /tmp/nomachine.html"
+      register: deb_url
+    - name: nx | print download url
+      debug: msg="{{ deb_url.stdout }}"
     - name: nx | download installer
       get_url:
-        url: https://download.nomachine.com/download/6.6/Linux/nomachine_6.6.8_5_amd64.deb
+        url: "{{ deb_url.stdout }}"
         dest: /tmp/nomachine.deb
     - name: nx | install nomachine
       apt:
